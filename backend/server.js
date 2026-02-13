@@ -80,33 +80,28 @@ app.post('/gemini/generate', async function(req, res) {
 // Chat with history
 app.post('/gemini/chat', async function(req, res) {
   try {
-    const message = req.body.message;
-    const history = req.body.history || [];
-
-    if (!message) {
-      return res.status(400).json({ error: 'Message is required' });
+    const { message, history } = req.body;
+    
+    // Check if the model is initialized
+    if (!model) {
+      return res.status(500).json({ error: "Model not initialized. Check API Key." });
     }
 
     const chat = model.startChat({
-      history: history,
-      generationConfig: {
-        maxOutputTokens: 1000,
-      },
+      history: history || [],
     });
 
     const result = await chat.sendMessage(message);
     const response = await result.response;
-    const chatHistory = await chat.getHistory();
+    const text = response.text();
 
-    res.json({
-      text: response.text(),
-      history: chatHistory,
-    });
+    res.json({ text: text });
     
   } catch (error) {
-    console.error('Error in /gemini/chat:', error);
+    // This logs the SPECIFIC error to your Vercel Logs
+    console.error("DETAILED ERROR:", error);
     res.status(500).json({ 
-      error: 'Failed to chat',
+      error: "Gemini Error", 
       details: error.message 
     });
   }
