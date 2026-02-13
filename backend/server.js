@@ -11,15 +11,27 @@ const port = process.env.PORT || 3001;
 // Setup CORS (allows frontend to talk to backend)
 // In server.js
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://my-gemini-chat-six.vercel.app',
-    'https://my-gemini-chat-n7kh.vercel.app' // Add this one!
-  ],
+  origin: function (origin, callback) {
+    // Allow local development
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://my-gemini-chat-six.vercel.app'
+    ];
+
+    // Allow ANY vercel.app sub-domain (fixes the random URL issue)
+    const isVercel = origin.endsWith('.vercel.app');
+
+    if (allowedOrigins.indexOf(origin) !== -1 || isVercel) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST'],
   credentials: true
 }));
-
 // Allow JSON data
 app.use(express.json());
 
