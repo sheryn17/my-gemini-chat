@@ -9,10 +9,12 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Setup CORS (allows frontend to talk to backend)
+// In server.js
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://my-gemini-chat-n7kh-fl40h11zg-sheryn-mae-abrils-projects.vercel.app'
+    'https://my-gemini-chat-six.vercel.app', // Your production backend
+    'https://my-gemini-chat-n7kh-fl40h11zg-sheryn-mae-abrils-projects.vercel.app' // ADD THIS EXACT LONG URL
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
