@@ -12,7 +12,7 @@ const port = process.env.PORT || 3001;
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://my-gemini-chat-n7kh.vercel.app'
+    'https://my-gemini-chat-n7kh-fl40h11zg-sheryn-mae-abrils-projects.vercel.app'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
