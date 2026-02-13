@@ -1,8 +1,3 @@
-// ============================================
-// GEMINI CHAT BACKEND - 100% JAVASCRIPT
-// ============================================
-
-// Import packages
 const express = require('express');
 const cors = require('cors');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
@@ -15,10 +10,15 @@ const port = process.env.PORT || 3001;
 
 // Setup CORS (allows frontend to talk to backend)
 app.use(cors({
+
   origin: [
+
     'http://localhost:3000',
-    'https://my-gemini-chat-n7kh.vercel.app'  // ADD YOUR ACTUAL URL!
-  ],
+    'https://my-gemini-chat-n7kh.vercel.app/' // Updated to your actual Vercel URL
+
+  ]
+
+})); // <--- You were missing these closing characters!
 
 // Allow JSON data
 app.use(express.json());
@@ -32,10 +32,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
-
-// ============================================
-// ROUTES (API ENDPOINTS)
-// ============================================
 
 // Test route - check if backend is working
 app.get('/', function(req, res) {
