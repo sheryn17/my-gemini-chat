@@ -37,8 +37,7 @@ app.use(express.json());
 
 // Initialize Google Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-// Use 'gemini-pro' as it is the most globally compatible name for v1beta
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 // Initialize Supabase
 const supabase = createClient(
