@@ -82,13 +82,14 @@ app.post('/gemini/chat', async function(req, res) {
   try {
     const { message, history } = req.body;
     
-    // Check if the model is initialized
-    if (!model) {
-      return res.status(500).json({ error: "Model not initialized. Check API Key." });
-    }
+    // Safety check: Ensure history is in the correct [{role, parts: [{text}]}] format
+    const formattedHistory = (history || []).map(item => ({
+      role: item.role,
+      parts: Array.isArray(item.parts) ? item.parts : [{ text: item.text }]
+    }));
 
     const chat = model.startChat({
-      history: history || [],
+      history: formattedHistory,
     });
 
     const result = await chat.sendMessage(message);
@@ -98,7 +99,6 @@ app.post('/gemini/chat', async function(req, res) {
     res.json({ text: text });
     
   } catch (error) {
-    // This logs the SPECIFIC error to your Vercel Logs
     console.error("DETAILED ERROR:", error);
     res.status(500).json({ 
       error: "Gemini Error", 

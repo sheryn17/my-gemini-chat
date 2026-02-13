@@ -40,19 +40,21 @@ function ChatInterface() {
     try {
       // Call backend API
       const response = await axios.post(API_URL + '/gemini/chat', {
-        message: userMessage,
-        history: geminiHistory,
-      });
+          message: userMessage,
+          history: geminiHistory,
+        });
 
       const aiResponse = response.data.text;
 
       // Add AI response to chat
       const newAIMessage = { role: 'model', text: aiResponse };
-      setChatHistory(function(prev) {
-        return [...prev, newAIMessage];
-      });
+        setChatHistory(prev => [...prev, newAIMessage]);
       
-      setGeminiHistory(response.data.history);
+      setGeminiHistory(prev => [
+        ...prev,
+        { role: 'user', parts: [{ text: userMessage }] },
+        { role: 'model', parts: [{ text: aiResponse }] }
+      ]);
 
       // Save to database
       await axios.post(API_URL + '/messages', {
