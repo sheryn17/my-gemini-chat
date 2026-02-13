@@ -37,7 +37,7 @@ app.use(express.json());
 
 // Initialize Google Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
 // Initialize Supabase
 const supabase = createClient(
