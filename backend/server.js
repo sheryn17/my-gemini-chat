@@ -10,15 +10,13 @@ const port = process.env.PORT || 3001;
 
 // Setup CORS (allows frontend to talk to backend)
 app.use(cors({
-
   origin: [
-
     'http://localhost:3000',
-    'https://my-gemini-chat-n7kh.vercel.app/' // Updated to your actual Vercel URL
-
-  ]
-
-})); // <--- You were missing these closing characters!
+    'https://my-gemini-chat-n7kh.vercel.app'
+  ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
 
 // Allow JSON data
 app.use(express.json());
