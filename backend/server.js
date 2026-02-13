@@ -14,7 +14,7 @@ app.use(cors({
   origin: [
 
     'http://localhost:3000',
-    'https://my-gemini-chat-six.vercel.app/' // Updated to your actual Vercel URL
+    'https://my-gemini-chat-n7kh.vercel.app/' // Updated to your actual Vercel URL
 
   ]
 
